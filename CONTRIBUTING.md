@@ -33,6 +33,8 @@ git clone https://github.com/philpaz/recusal
 cd recusal
 pip install -e ".[dev]"
 ruff check .
+ruff format --check .
+mypy
 pytest -q
 ```
 
@@ -50,6 +52,50 @@ Python 3.9+. **Zero runtime dependencies**, please keep `recusal/` standard-libr
   fingerprint stability are generative locks, and a kernel change that cannot state its
   invariant is a kernel change we cannot review.
 - Keep findings pure (no I/O); put structured detail in `context`, not the message.
+
+## Definition of done
+
+A PR merges only when every one of these required checks is green on its final commit.
+They are the same for every contribution, large or small:
+
+| check | what it proves |
+|---|---|
+| `test (ubuntu-latest, 3.9)` | the full gate on the oldest supported Python |
+| `test (ubuntu-latest, 3.10)` | the full gate on 3.10 |
+| `test (ubuntu-latest, 3.11)` | the full gate on 3.11 |
+| `test (ubuntu-latest, 3.12)` | the full gate on 3.12 |
+| `test (ubuntu-latest, 3.13)` | the full gate on 3.13 |
+| `test (ubuntu-latest, 3.14)` | the full gate on the newest supported Python |
+| `test (macos-latest, 3.12)` | the full gate on macOS |
+| `test (windows-latest, 3.12)` | the full gate on Windows |
+| `Workflow audit (zizmor)` | every workflow passes the security audit |
+| `Dogfood the GitHub Action` | the shipped GitHub Action still gates correctly |
+| `Action ref selects the implementation` | an Action ref runs the code at that ref |
+| `Hash-locked release environment builds` | the release build is unaffected |
+
+"The full gate" is the same four commands in every `test` job, and all four must pass:
+`ruff check .`, `ruff format --check .`, `mypy`, and `pytest -q` (the whole suite, not
+only the tests you touched). Run them locally before you push; they are the commands in
+[Development setup](#development-setup).
+
+What else a reviewer will check before merging:
+
+- **The change is proven, not just passing.** New behavior comes with a test that fails
+  without it. Reviewers will often put the old code back and confirm your test catches it.
+- **Same answer on every Python.** If your change parses or compares input, it gives the
+  same result on 3.9 and on the newest supported version (see Principles).
+- **Documentation matches the code.** If you change behavior a document describes, update
+  that document in the same PR.
+- **An example that needs more than the core says so.** An example under `examples/` may
+  need an optional third-party package or a newer Python than the package does. If it
+  does, it must refuse clearly when the requirement is missing (a message and a non-zero
+  exit, not an import error), its tests must skip with a named reason, and nothing under
+  `recusal/` may import the package. The core stays standard-library only.
+
+Workflow changes follow the existing jobs: actions pinned to full commit SHAs with the tag
+in a comment, `persist-credentials: false`, and no permissions beyond what the job needs.
+The zizmor audit above enforces this. `tests/test_contributing_checks.py` fails if this
+table and the jobs in `.github/workflows/ci.yml` ever disagree.
 
 ## What we'll likely decline
 
