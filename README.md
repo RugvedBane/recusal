@@ -628,15 +628,20 @@ Thank you to the people who have made Recusal better:
   `recusal.checks.date_range` check in [#17](https://github.com/philpaz/recusal/pull/17),
   the project's first outside contribution. Reviewing it also exposed a
   cross-Python bug in Recusal's own expiry check, fixed in 0.10.2.
-- [@fatihcvs](https://github.com/fatihcvs): five tested cookbook examples (a custom
-  audit sink, egress allowlist, action budget, workspace confinement and SQL scope) and
-  two follow-up fixes, in [#23](https://github.com/philpaz/recusal/pull/23),
+- [@fatihcvs](https://github.com/fatihcvs): seven tested cookbook examples (a custom
+  audit sink, egress allowlist, action budget, workspace confinement, SQL scope,
+  destructive shell and approved-tool allowlist), a hardened prompt-injection screen,
+  and follow-up fixes, in [#23](https://github.com/philpaz/recusal/pull/23),
   [#24](https://github.com/philpaz/recusal/pull/24),
   [#25](https://github.com/philpaz/recusal/pull/25),
   [#33](https://github.com/philpaz/recusal/pull/33),
   [#34](https://github.com/philpaz/recusal/pull/34),
-  [#38](https://github.com/philpaz/recusal/pull/38) and
-  [#39](https://github.com/philpaz/recusal/pull/39).
+  [#38](https://github.com/philpaz/recusal/pull/38),
+  [#39](https://github.com/philpaz/recusal/pull/39),
+  [#48](https://github.com/philpaz/recusal/pull/48),
+  [#49](https://github.com/philpaz/recusal/pull/49),
+  [#50](https://github.com/philpaz/recusal/pull/50) and
+  [#51](https://github.com/philpaz/recusal/pull/51).
 
 Want to join them? Issues labeled `good first issue` are a friendly place to start;
 see the [open issues](https://github.com/philpaz/recusal/issues).

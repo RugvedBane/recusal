@@ -12,9 +12,9 @@ All notable changes to this project are documented here. The format follows
   Python gives the same verdict, and an invalid window (unparseable, mixed kinds, or
   inverted) is reported as a caller error rather than as row violations. Contributed by
   @DYNOSuprovo in #17, the project's first outside contribution.
-- Five runnable, tested examples, each linked from the guide it completes. None changes
-  the `recusal` package. Contributed by @fatihcvs in #23, #24, #25, #33, #34, #38 and
-  #39.
+- Seven runnable, tested examples, and a hardened eighth, each linked from the guide it
+  completes. None changes the `recusal` package. Contributed by @fatihcvs in #23, #24,
+  #25, #33, #34, #38, #39, #48, #49, #50 and #51.
   - `examples/audit_sink.py`: a custom `AuditSink` that mirrors each entry to a local
     file and advances its head only after a successful write, so a failed delivery is
     never recorded as delivered.
@@ -32,7 +32,16 @@ All notable changes to this project are documented here. The format follows
     comments and quoted text, checks each statement on its own, and refuses a
     `DELETE`/`UPDATE` with no top-level `WHERE`, so `updated_at` is no longer mistaken
     for a command and a commented-out `WHERE` no longer counts. An unquoted `#` is
-    refused, because it starts a comment in MySQL and MariaDB.
+    refused, because it starts a comment in MySQL and MariaDB. A `DELETE` or `UPDATE`
+    inside a `WITH` clause needs its own `WHERE`; a sibling query cannot supply it.
+  - `examples/destructive_shell_policy.py` (cookbook recipe 1): wraps Recusal's own
+    reference deny list, with optional local markers on top, so the recipe cannot
+    fall behind the engine it teaches.
+  - `examples/approved_tool_policy.py` (cookbook recipe 9): an allowlist that refuses a
+    missing, empty, non-string or unknown tool name.
+  - `examples/injection_quarantine.py` (cookbook recipe 6, hardened): normalizes case,
+    spacing and invisible characters before matching, and says plainly that phrase
+    matching is a tripwire, not a defense.
 
 ### Fixed
 - **Cookbook recipe 5 (egress allowlist) could let data go to the wrong address.** The
