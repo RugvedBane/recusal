@@ -4,7 +4,12 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.11.0] - 2026-09-27
+
+One new check and a set of tested cookbook examples, all from the project's first two
+outside contributors. MINOR under `STABILITY.md`: `recusal.checks.date_range` is added;
+nothing that existed changes. The examples live under `examples/` and are not part of the
+installed package.
 
 ### Added
 - `recusal.checks.date_range`: fail when any date or datetime in a column falls outside
